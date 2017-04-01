@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
 
 const MainView = props => {
   return (
+    // Global Feed Toggle
     <div className="col-md-9">
       <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
@@ -22,7 +23,7 @@ const MainView = props => {
 
         </ul>
       </div>
-
+// Article feed
       <ArticleList
         articles={props.articles} />
     </div>
