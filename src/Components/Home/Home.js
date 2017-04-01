@@ -7,14 +7,14 @@ import { connect } from 'react-redux';
 const Promise = global.Promise;
 
 const mapStateToProps = state => ({
-  appName: state.appName
+  appName: state.common.appName
 });
 
 // mapDispatchToProps function maps the Redux store's
 // dispatch() function to functions
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
-    dispatch({ type: 'HOME_PAGE_LOADED', payload })
+    dispatch({ type: 'HOME_PAGE_LOADED', payload }),
 });
 
 class Home extends React.Component {
@@ -22,6 +22,7 @@ class Home extends React.Component {
   componentWillMount(){
     this.props.onLoad(agent.Articles.all());
   }
+
   render() {
     return (
       <div className="home-page">

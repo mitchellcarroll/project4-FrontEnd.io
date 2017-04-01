@@ -30,7 +30,7 @@ const ArticlePreview = props => {
         </div>
       </div>
 
-// article preview 
+// article preview
       <a to={`article/${article.slug}`} className="preview-link">
         <h1>{article.title}</h1>
         <p>{article.description}</p>
