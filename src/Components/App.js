@@ -1,11 +1,11 @@
 import Header from './Header';
-import Home from './Home/Home';
+import Home from './Home/index';
 import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => ({
-  appName: state.common.appName
+  appName: state.common.appName,
   currentUser: state.common.currentUser,
   redirectTo: state.common.redirectTo
 });
@@ -25,7 +25,7 @@ class App extends React.Component {
       agent.setToken(token);
     }
 
-    this.props.onLoad(token ? agent.Auth.current(): null, token);
+    this.props.onLoad(token ? agent.Auth.current() : null, token);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,8 +39,8 @@ class App extends React.Component {
     return (
       <div>
         <Header
-        currentUser={this.props.currentUser}
-        appName={this.props.appName} />
+          currentUser={this.props.currentUser}
+          appName={this.props.appName} />
         {this.props.children}
       </div>
     );
@@ -49,6 +49,6 @@ class App extends React.Component {
 
 App.contextTypes = {
   router: React.PropTypes.object.isRequired
-  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

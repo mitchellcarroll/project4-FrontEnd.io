@@ -10,17 +10,21 @@ const mapStateToProps = state => ({
   appName: state.common.appName
 });
 
-// mapDispatchToProps function maps the Redux store's
-// dispatch() function to functions
 const mapDispatchToProps = dispatch => ({
   onLoad: (payload) =>
     dispatch({ type: 'HOME_PAGE_LOADED', payload }),
+  onLoad: () =>
+    dispatch({ type: 'HOME_PAGE_LOADED' })
 });
 
 class Home extends React.Component {
   // Lifecycle hook
   componentWillMount(){
     this.props.onLoad(agent.Articles.all());
+  }
+
+  componentWillUnmount() {
+    this.props.onUnload();
   }
 
   render() {

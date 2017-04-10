@@ -12,7 +12,9 @@ const mapDispatchToProps = dispatch => ({
   onChangePassword: value =>
     dispatch({ type: 'UPDATE_FIELD_AUTH', key: 'password', value }),
   onSubmit: (email, password) =>
-    dispatch({ type: 'LOGIN', payload: agent.Auth.login(email, password) })
+    dispatch({ type: 'LOGIN', payload: agent.Auth.login(email, password) }),
+  onUnload: () =>
+    dispatch({ type: 'LOGIN_PAGE_UNLOADED' })
 });
 
 class Login extends React.Component {
@@ -25,6 +27,10 @@ class Login extends React.Component {
       this.props.onSubmit(email, password);
     };
   }
+
+  componentWillUnmount() {
+    this.props.onUnload();
+  }
   render() {
     const email = this.props.email;
     const password = this.props.password;
@@ -36,7 +42,7 @@ class Login extends React.Component {
             <div className="col-md-6 offset-md-3 col-xs-12">
               <h1 className="text-xs-center">Sign In</h1>
               <p className="text-xs-center">
-                <Link to= "register">
+                <Link to="register">
                   Need an account?
                 </Link>
               </p>
@@ -59,25 +65,26 @@ class Login extends React.Component {
                 <input
                   className="form-control form-control-lg"
                   type="password"
-                  placeholder="Password" />
+                  placeholder="Password"
                   value={password}
                   onChange={this.changePassword} />
               </fieldset>
 
               <button
                 className="btn btn-lg btn-primary pull-xs-right"
-                type="submit">
+                type="submit"
                 disabled={this.props.inProgress}>
-                sign in
+                Sign in
               </button>
 
             </fieldset>
           </form>
         </div>
 
-        </div>
       </div>
     </div>
+  </div>
+  
     );
   }
 }

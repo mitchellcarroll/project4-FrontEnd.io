@@ -39,7 +39,7 @@ const LoggedInView = props => {
 
         <li className="nav-item">
           <Link to="" className="nav-link">
-          Home
+            Home
         </Link>
       </li>
 
@@ -66,7 +66,7 @@ const LoggedInView = props => {
 
     </ul>
   );
-  }
+}
 
   return null;
 };

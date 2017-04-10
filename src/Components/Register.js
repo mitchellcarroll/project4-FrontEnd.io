@@ -4,7 +4,7 @@ import React from 'react';
 import agent from '../agent';
 import { connect } from 'react-redux';
 
-const map StateToProps = state => ({ ...state.auth });
+const mapStateToProps = state => ({ ...state.auth });
 
 const mapDispatchToProps = dispatch => ({
   onChangeEmail: value =>
@@ -16,7 +16,9 @@ const mapDispatchToProps = dispatch => ({
   onSubmit: (username, email, password) => {
     const payload = agent.Auth.register(username, email, password);
     dispatch({ type: 'REGISTER', payload })
-  }
+  },
+  onUnload: () =>
+    dispatch({ type: 'REGISTER_PER_UNLOADED' })
 });
 
 class Register extends React.Component {
@@ -25,32 +27,38 @@ class Register extends React.Component {
     this.changeEmail = ev => this.props.onChangeEmail(ev.target.value);
     this.changePassword = ev => this.props.onChangePassword(ev.target.value);
     this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-    this.submitForm = (username, email, password);
+    this.submitForm = (username, email, password) => ev => {
+      ev.preventDefault();
+      this.props.onSubmit(username, email, password);
+    }
   }
-}
 
-render() {
-  const email = this.props.email;
-  const password = this.props.passwod;
-  const username = this.props.username;
+  componentWillUnmount() {
+    this.props.onUnload();
+  }
 
-  return (
-    <div className="auth-page">
-      <div className="container page">
-        <div className="row">
+  render() {
+    const email = this.props.email;
+    const password = this.props.password;
+    const username = this.props.username;
 
-          <div className="col-md-6 offset-md-3 col-xs-12">
-            <h1 className="text-xs-center">Sign UP</h1>
+    return (
+      <div className="auth-page">
+        <div className="container page">
+          <div className="row">
+
+            <div className="col-md-6 offset-md-3 col-xs-12">
+              <h1 className="text-xs-center">Sign Up</h1>
               <p className="text-xs-center">
                 <Link to="login">
                   Have an account?
                 </Link>
               </p>
 
-            <ListErrors errors={this.props.errors} />
+              <ListErrors errors={this.props.errors} />
 
-            form onSubmit={this.submitForm(username, email, password)}>
-              <fieldset>
+              <form onSubmit={this.submitForm(username, email, password)}>
+                <fieldset>
 
                 <fieldset className="form-group">
                   <input
@@ -70,29 +78,29 @@ render() {
                       onChange={this.changeEmail} />
                     </fieldset>
 
-                    <fieldset className="form-group">
-                      <input
-                        className="form-control form-control-lg"
-                        type="password"
-                        placeholder="Password"
-                        value={this.props.password}
-                        onChange={this.changePassword} />
-                      </fieldset>
-
-                      <button
-                        className="btn btn-lg btn-primary pull-xs-right"
-                        type="submit"
-                        disabled={this.props.inProgress}>
-                        Sign in
-                      </button>
-
+                  <fieldset className="form-group">
+                    <input
+                      className="form-control form-control-lg"
+                      type="password"
+                      placeholder="Password"
+                      value={this.props.password}
+                      onChange={this.changePassword} />
                     </fieldset>
-                  </form>
-                </div>
 
-              </div>
+                  <button
+                    className="btn btn-lg btn-primary pull-xs-right"
+                    type="submit"
+                    disabled={this.props.inProgress}>
+                    Sign in
+                  </button>
+
+                </fieldset>
+              </form>
             </div>
+
           </div>
+        </div>
+      </div>
     );
   }
 }

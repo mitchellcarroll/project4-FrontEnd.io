@@ -6,17 +6,17 @@ class ListErrors extends React.Component {
     if (errors) {
       return (
         <ul className="error-messages">
-        {
+          {
           Object.keys(errors).map(key => {
             return (
               <li key={key}>
               {key} {errors[key]}
-            </li>
+                </li>
             );
           })
         }
         </ul>
-      );
+        );
     } else {
       return null;
     }
