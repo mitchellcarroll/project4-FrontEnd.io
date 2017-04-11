@@ -7,15 +7,15 @@ const ArticlePreview = props => {
   return (
     <div className="article-preview">
       <div className="article-meta">
-        <a>
+        <Link to={`@${article.author.username}`}>
           <img src={article.author.image} />
-        </a>
+        </Link>
 
 // article written by and created at
         <div className="info">
-          <a className="author">
+          <Link className="author" to={`@${article.author.username}`}>
             {article.author.username}
-          </a>
+          </Link>
           <span className="date">
             {new Date(article.createdAt).toDateString()}
           </span>
@@ -31,7 +31,7 @@ const ArticlePreview = props => {
       </div>
 
 // article preview
-      <a to={`article/${article.slug}`} className="preview-link">
+      <Link to={`article/${article.slug}`} className="preview-link">
         <h1>{article.title}</h1>
         <p>{article.description}</p>
         <span>Read more...</span>
